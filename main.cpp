@@ -1,9 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
-#include "square.h"
+//#include "square.h"
 #include "sotrudnik.h"
-#include "square.h"
 #include "BASE.h"
 
 
@@ -116,17 +115,17 @@ int main()
 	
 	int err = 0;
 
-	while (main_option != 4)
+	while (main_option != 5)
 	{
 		Main_Menu();
 
-		main_option = Option_Choose(4);
+		main_option = Option_Choose(5);
 
 		switch (main_option)
 		{
 
-		case 1:
-		{
+		 case 1:
+		  {
 			
 			err = data_base->Create_Baza_F("FIK.txt");
 
@@ -134,44 +133,44 @@ int main()
 			{
 			case -1:
 				printf("File was not found\n");
-				system("pause");
+			
 				return -1;
 
 			case -2:
 				printf("cant open file\n");
-				system("pause");
+				
 				return -2;
 
 
 			case -3:
 				printf("memmory allocating errors while expanding database\n");
-				system("pause");
+				
 				return -3;
 
 			case 0:
 				printf("Creation was successful\n");
-				system("pause");
+				
 				break;
 			}
 
 			system("pause");
 
-			break;
-		}
+		 	break;
+		  }
 
-		case 2:
-		{
+		 case 2:
+		  {
 			data_base->Print_Baza();
 			system("pause");
 			break;
-		}
+		  }
 
-		case 3:
-		{
+		 case 3:
+		  {
 			How_to_edit_menu();
 
 			int option = 0;
-			option = Option_Choose(2);
+			option = Option_Choose(3);
 
 			switch (option)
 			{
@@ -189,6 +188,7 @@ int main()
 				printf("Element added successfully\n");
 				system("pause");
 				break;
+				
 			}
 
 			case 3:
@@ -204,7 +204,24 @@ int main()
 
 			}
 
-		}
+		  }
+
+		 case 4:
+		   {
+			char filename[255];
+			
+			printf("Enter file name\n->");
+			scanf("%s", filename);
+
+			int err = data_base->Baza_cpy(filename);
+			if (err == 0)
+			{
+				printf("baza copied succsessfully\n");
+			}
+			system("pause");
+		 	break;
+		   }
+
 		}
 	}
 	return 0;

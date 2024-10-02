@@ -13,7 +13,11 @@ public:
 	sotrudnik();
 
 	sotrudnik(int n);
+
+	sotrudnik(const sotrudnik& b);
 	
+	const sotrudnik& operator = (const sotrudnik& b);
+
 	~sotrudnik();
 	
 	void Set_Name(char* s);

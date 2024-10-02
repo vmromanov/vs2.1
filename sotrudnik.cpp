@@ -20,6 +20,31 @@ sotrudnik::sotrudnik(int n)
 	data[0] = '\0';
 }
 
+// Конструктор копирования
+sotrudnik::sotrudnik(const sotrudnik& b)
+{
+	name = new char[strlen(b.name) + 1];
+	strcpy(name, b.name);
+	age = b.age;
+	sal = b.sal;
+	strcpy(data, b.data);
+}
+
+
+// Перегрузка операции присваивания
+const sotrudnik& sotrudnik:: operator = (const sotrudnik& b)
+{
+	if (&b == this)
+		return *this;
+	delete[] name;
+	name = new char[strlen(b.name) + 1];
+	strcpy(name, b.name);
+	age = b.age;
+	sal = b.sal;
+	strcpy(data, b.data);
+	return *this;
+}
+
 sotrudnik::~sotrudnik()
 {
 	if (name != NULL)
@@ -70,7 +95,7 @@ char* sotrudnik::Get_Data()
 
 void sotrudnik::Print()
 {
-	printf("%-31s %5d %8.3f %11s\n", name, age, sal, data);
+	printf("%-31s %5d %9.5f %13s\n", name, age, sal, data);
 }
 
 void sotrudnik::Vvod()
@@ -79,8 +104,7 @@ void sotrudnik::Vvod()
 
 	printf("Enter employee info\nExample: Last_Name Initials Birth_Year Salary Start_Date \n-> ");
 
-	scanf_s("%s %s %d %f %s ", name, 31, initials, 5, &age, &sal, data, 11);
-	//scanf("%s %s %d %f %s ", name, initials, &age, &sal, data);
+	scanf("%s %s %d %f %s", name, initials, &age, &sal, data);
 	strcat(name, " ");
 	strcat(name, initials);
 
@@ -88,7 +112,7 @@ void sotrudnik::Vvod()
 
 bool sotrudnik::siv(char* s)
 {
-	if (!strcmp(name, s)) return true;
+	if (strcmp(name, s)==0) return true;
 	return false;
 }
 

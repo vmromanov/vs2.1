@@ -26,7 +26,7 @@ public:
 
 	void Baza_correction();
 
-	void Baza_cpy(char* namef);
+	int Baza_cpy(char* namef);
 };
 
 void Main_Menu();

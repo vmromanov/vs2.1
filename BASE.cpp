@@ -76,7 +76,7 @@ int Baza::Create_Baza_F(const char* namefile)
 
 		if (amount == size)
 		{
-			int rez = Basa_Expansion();
+			int rez = Basa_Expansion();//change size
 			if (rez != 0) 
 			{
 				fclose(f);
@@ -97,10 +97,10 @@ int Option_Choose(int options_amount)
 	int choose = 0;
 	scanf("%d", &choose);
 	while (choose <= 0 || choose > options_amount)
-	{
+	{	
 		printf("Incorrect input! try again\n->");
 		scanf("%d", &choose);
-	}
+	} 
 	return choose;
 }
 
@@ -115,8 +115,19 @@ void Baza::Print_Baza()
 
 void Baza::Baza_add()
 {
-	arr[amount].Vvod();
-	++amount;
+	char name1[31];
+	char initials[5];
+	char data1[11];
+	float sal1=0.0;
+	int birth = 0;
+	printf("Enter employee info\nFormat: Last_Name Initials Birth_Year Salary Start_Date \n-> ");
+
+	scanf("%s %s %d %f %s", name1, initials, &birth, &sal1, data1);
+	strcat(name1, " ");
+	strcat(name1, initials);
+
+	/*arr[amount].Vvod();
+	++amount;*/
 	
 	if (amount == size)
 	{
@@ -124,10 +135,32 @@ void Baza::Baza_add()
 		if (err)
 		printf("cant expand base after adding new employee\n");
 	}
+
+	int numb = 0;
+
+	for (int i = 0; i < amount; ++i)
+	{
+		if (strcmp(arr[i].Get_Name(), name1) > 0)
+		{
+			break;
+		}
+		else
+		{
+			numb++;
+		}
+	}
+
+	for (int i = amount; i > numb; --i)
+	{
+		arr[i] = arr[i - 1];
+	}
+	
+	arr[numb].Set_Age(birth);
+	arr[numb].Set_Data(data1);
+	arr[numb].Set_Name(name1);
+	arr[numb].Set_sal(sal1);
+
 }
-
-
-
 
 void Baza::Baza_del_el()
 {
@@ -157,7 +190,6 @@ void Baza::Baza_del_el()
 			break;
 		}
 	}
-
 }
 
 void Employee_Edit_Menu()
@@ -174,24 +206,28 @@ void Baza::Baza_correction()
 {
 	printf("Enter name and initials of employee you want to change\n");
 
-	char name[31];
+	char name1[31];
 	char inits[5];
-	int num = 0;
+	int num = -1;
 
-	scanf("%s %s", name, inits);
+	scanf("%s %s", name1, inits);
 	inits[4] = '\0';
-	strcat(name, " ");
-	strcat(name, inits);
+	strcat(name1, " ");
+	strcat(name1, inits);
 
 	for (int i = 0; i < amount; ++i)
 	{
-		if (arr[i].siv(name) == true)
+		if (arr[i].siv(name1)==true)
 		{
 			num = i;
+			printf("%d", i);
 			break;
 		}
-		printf("Employee with name you inserted doesnt exist\n");
-		return;
+		if (i == amount - 1 && num == -1)
+		{
+			printf("Employee with name you inserted does not exist");
+			return;
+		}
 	}
 
 	int choose = 0;
@@ -206,11 +242,11 @@ void Baza::Baza_correction()
 	{
 		printf("Enter new name and initials\n-> ");
 
-		scanf("%s %s", name, inits);
-		strcat(name, " ");
-		strcat(name, inits);
+		scanf("%s %s", name1, inits);
+		strcat(name1, " ");
+		strcat(name1, inits);
 
-		arr[num].Set_Name(name);
+		arr[num].Set_Name(name1);
 
 		break;
 	}
@@ -231,26 +267,29 @@ void Baza::Baza_correction()
 	return;
 }
 
-void Baza::Baza_cpy(char* namef)
+int Baza::Baza_cpy(char* namef)
 {
 	if (namef == NULL)
 	{
-		printf("filename incorrect\n");
-		return;
+		printf("Filename incorrect\n");
+		return -1;
 	}
 
 	FILE* f = fopen(namef, "w");
 	if (f == NULL)
 	{
-		printf("cant open file\n");
-		return;
+		printf("Cant open file\n");
+		return -2;
 	}
 
 	for (int i = 0; i < amount; ++i)
 	{
-		fprintf(f, "%-31s %5d %8.3f %11s\n", arr[i].Get_Name(), arr[i].Get_Age(), arr[i].Get_Sal(), arr[i].Get_Data());
+		fprintf(f, "%s %d %f %s\n", arr[i].Get_Name(), arr[i].Get_Age(), arr[i].Get_Sal(), arr[i].Get_Data());
 	}
-}  //%s %d %f %s
+
+	fclose(f);
+	return 0;
+}  
 
 void Main_Menu()
 {
@@ -259,7 +298,8 @@ void Main_Menu()
 	printf("1 - Create data base from file\n");
 	printf("2 - Print data base\n");
 	printf("3 - edit data base\n");
-	printf("4 - exit\n");
+	printf("4 - Print base to file\n");
+	printf("5 - exit\n");
 	printf("-> ");
 }
 
