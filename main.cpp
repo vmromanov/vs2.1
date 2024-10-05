@@ -176,7 +176,17 @@ int main()
 			{
 			case 1:
 			{
-				data_base->Baza_del_el();
+				char name[31];
+				char inits[5];
+
+				printf("Enter name and initsials of employee to delete\n");
+				scanf("%s %s", name, inits);
+
+				inits[4] = '\0';
+				strcat(name, " ");
+				strcat(name, inits);
+
+				data_base->Baza_del_el(name);
 				printf("Element deleted successfully\n");
 				system("pause");
 				break;
@@ -184,7 +194,9 @@ int main()
 
 			case 2:
 			{
-				data_base->Baza_add();
+				sotrudnik dop;
+				dop.Vvod();
+				data_base->Baza_add(dop);
 				printf("Element added successfully\n");
 				system("pause");
 				break;
@@ -193,7 +205,22 @@ int main()
 
 			case 3:
 			{
-				data_base->Baza_correction();
+				option = Option_Choose(2);
+
+				switch (option)
+				{
+				case 1:
+				  {
+
+  
+				  }
+				case 2:
+				  {
+
+				  }
+
+				}
+				
 				printf("Element changed successfully\n");
 				system("pause");
 				break;
@@ -208,18 +235,21 @@ int main()
 
 		 case 4:
 		   {
-			char filename[255];
-			
-			printf("Enter file name\n->");
-			scanf("%s", filename);
+			  if (main_option == 4)
+			  {
+				 char filename[255];
 
-			int err = data_base->Baza_cpy(filename);
-			if (err == 0)
-			{
-				printf("baza copied succsessfully\n");
-			}
-			system("pause");
-		 	break;
+				 printf("Enter file name\n->");
+				 scanf("%s", filename);
+
+				 int err = data_base->Baza_cpy(filename);
+				 if (err == 0)
+				 {
+					 printf("baza copied succsessfully\n");
+				 }
+				 system("pause");
+				 break;
+			  }
 		   }
 
 		}

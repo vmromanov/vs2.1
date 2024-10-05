@@ -2,7 +2,7 @@
 #include "sotrudnik.h"
 #include <iostream>
 
-Baza::Baza()
+Baza::Baza() //obiedinit s konstruktorom s parametrom
 {
 	size = 100;
 	amount = 0;
@@ -38,10 +38,6 @@ int Baza::Basa_Expansion()
 	arr = tmp;
 
 	size *= 2;
-
-	for (int i = amount; i < size; ++i) {
-		arr[i] = sotrudnik(); 
-	}
 
 	return 0;
 }
@@ -113,18 +109,8 @@ void Baza::Print_Baza()
 	}
 }
 
-void Baza::Baza_add()
+void Baza::Baza_add(sotrudnik emp)
 {
-	char name1[31];
-	char initials[5];
-	char data1[11];
-	float sal1=0.0;
-	int birth = 0;
-	printf("Enter employee info\nFormat: Last_Name Initials Birth_Year Salary Start_Date \n-> ");
-
-	scanf("%s %s %d %f %s", name1, initials, &birth, &sal1, data1);
-	strcat(name1, " ");
-	strcat(name1, initials);
 
 	/*arr[amount].Vvod();
 	++amount;*/
@@ -140,7 +126,7 @@ void Baza::Baza_add()
 
 	for (int i = 0; i < amount; ++i)
 	{
-		if (strcmp(arr[i].Get_Name(), name1) > 0)
+		if (strcmp(arr[i].Get_Name(), emp.Get_Name()) > 0)
 		{
 			break;
 		}
@@ -155,14 +141,10 @@ void Baza::Baza_add()
 		arr[i] = arr[i - 1];
 	}
 	
-	arr[numb].Set_Age(birth);
-	arr[numb].Set_Data(data1);
-	arr[numb].Set_Name(name1);
-	arr[numb].Set_sal(sal1);
-
+	arr[numb] = emp;
 }
 
-void Baza::Baza_del_el()
+void Baza::Baza_del_el(char* name)
 {
 	if (amount == 0)
 	{
@@ -170,15 +152,6 @@ void Baza::Baza_del_el()
 		return;
 	}
 
-	char name[31];
-	char inits[5];
-
-	printf("Enter name and initsials of employee to delete\n");
-	scanf("%s %s", name, inits);
-
-	inits[4] = '\0';
-	strcat(name, " ");
-	strcat(name, inits);
 
 	for (int i = 0; i < amount; ++i)
 	{
@@ -202,19 +175,19 @@ void Employee_Edit_Menu()
 	
 }
 
-void Baza::Baza_correction()
+void Baza::Baza_correction(char* name1)//peredel na 2 funktsii
 {
 	printf("Enter name and initials of employee you want to change\n");
 
 	char name1[31];
 	char inits[5];
-	int num = -1;
 
 	scanf("%s %s", name1, inits);
 	inits[4] = '\0';
 	strcat(name1, " ");
 	strcat(name1, inits);
 
+    int num = -1;
 	for (int i = 0; i < amount; ++i)
 	{
 		if (arr[i].siv(name1)==true)

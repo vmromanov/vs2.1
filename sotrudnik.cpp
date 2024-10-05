@@ -112,8 +112,8 @@ void sotrudnik::Vvod()
 
 bool sotrudnik::siv(char* s)
 {
-	if (strcmp(name, s)==0) return true;
-	return false;
+	//if (strcmp(name, s)==0) return true;
+	return !strcmp(name, s);
 }
 
 

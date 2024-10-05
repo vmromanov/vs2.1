@@ -20,11 +20,11 @@ public:
 
 	void Print_Baza();
 
-	void Baza_add();
+	void Baza_add(sotrudnik emp);
 
-	void Baza_del_el();
+	void Baza_del_el(char* name);
 
-	void Baza_correction();
+	void Baza_correction(char* name1);
 
 	int Baza_cpy(char* namef);
 };
