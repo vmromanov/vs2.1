@@ -24,7 +24,9 @@ public:
 
 	void Baza_del_el(char* name);
 
-	void Baza_correction(char* name1);
+	int Sal_Change(char* name, float new_sal); 
+
+	int Name_Change(char* name, char* new_name);
 
 	int Baza_cpy(char* namef);
 };

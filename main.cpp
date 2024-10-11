@@ -176,6 +176,7 @@ int main()
 			{
 			case 1:
 			{
+
 				char name[31];
 				char inits[5];
 
@@ -205,23 +206,64 @@ int main()
 
 			case 3:
 			{
+				char name1[31];
+				char inits[5];
+
+				printf("Enter second_name and initiald of employee to change\n-> ");
+				scanf("%s %s", name1, inits);
+				inits[4] = '\0';
+				strcat(name1, " ");
+				strcat(name1, inits);
+
+				Employee_Edit_Menu();
+
 				option = Option_Choose(2);
 
 				switch (option)
 				{
 				case 1:
-				  {
+				{
+					char name2[31];
+					printf("Enter new second_name and initials\n-> ");
 
-  
-				  }
+					scanf("%s %s", name2, inits);
+					strcat(name2, " ");
+					strcat(name2, inits);
+
+					err = data_base->Name_Change(name1, name2);
+					if (!err)
+					{
+						printf("name changed sucsesfully\n");
+					}
+					else
+					{
+						printf("employee with name you inserted doesnt found\n");
+					}
+					break;
+				}
 				case 2:
-				  {
+				{
+					float sal = 0.0;
 
-				  }
+					printf("Enter new salary\n-> ");
+					scanf("%f", &sal);
+
+					err = data_base->Sal_Change(name1, sal);
+
+					if (!err)
+					{
+						printf("salary changed sucsesfully\n");
+					}
+					else
+					{
+						printf("employee with name you inserted doesnt found\n");
+					}
+
+					break;
+				}
 
 				}
 				
-				printf("Element changed successfully\n");
 				system("pause");
 				break;
 			}

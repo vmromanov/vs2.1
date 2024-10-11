@@ -2,17 +2,10 @@
 #include "sotrudnik.h"
 #include <iostream>
 
-Baza::Baza() //obiedinit s konstruktorom s parametrom
+Baza::Baza(int n = 100)
 {
-	size = 100;
-	amount = 0;
+	size = n;
 	arr = new sotrudnik[size];
-}
-
-Baza::Baza(int n)
-{
-	arr = new sotrudnik[n];
-	size = 100;
 	amount = 0;
 }
 
@@ -152,7 +145,6 @@ void Baza::Baza_del_el(char* name)
 		return;
 	}
 
-
 	for (int i = 0; i < amount; ++i)
 	{
 		if (arr[i].siv(name) == true)
@@ -175,7 +167,33 @@ void Employee_Edit_Menu()
 	
 }
 
-void Baza::Baza_correction(char* name1)//peredel na 2 funktsii
+int Baza::Sal_Change(char* name, float new_sal)
+{
+	for (int i = 0; i < amount; ++i)
+	{
+		if (!(arr[i].siv(name)))
+		{
+			arr[i].Set_sal(new_sal);
+			return 0;
+		}
+	}
+	return -1;
+}
+
+int Baza::Name_Change(char* name, char* new_name)
+{
+	for (int i = 0; i < amount; ++i)
+	{
+		if (!(arr[i].siv(name)))
+		{
+			arr[i].Set_Name(new_name);
+			return 0;
+		}
+	}
+	return -1;
+}
+
+void Baza_correction(char* name1)//peredel na 2 funktsii
 {
 	printf("Enter name and initials of employee you want to change\n");
 
@@ -183,9 +201,6 @@ void Baza::Baza_correction(char* name1)//peredel na 2 funktsii
 	char inits[5];
 
 	scanf("%s %s", name1, inits);
-	inits[4] = '\0';
-	strcat(name1, " ");
-	strcat(name1, inits);
 
     int num = -1;
 	for (int i = 0; i < amount; ++i)
@@ -203,42 +218,10 @@ void Baza::Baza_correction(char* name1)//peredel na 2 funktsii
 		}
 	}
 
-	int choose = 0;
-
-	Employee_Edit_Menu();
-
-	choose = Option_Choose(2);
-
-	switch (choose)
-	{
-	case 1:
-	{
-		printf("Enter new name and initials\n-> ");
-
-		scanf("%s %s", name1, inits);
-		strcat(name1, " ");
-		strcat(name1, inits);
-
-		arr[num].Set_Name(name1);
-
-		break;
-	}
-	case 2:
-	{
-		float sal = 0.0;
-
-		printf("Enter new salary\n-> ");
-		scanf("%f", &sal);
-
-		arr[num].Set_sal(sal);
-
-		break;
 	}
 
-	}
 
-	return;
-}
+
 
 int Baza::Baza_cpy(char* namef)
 {
