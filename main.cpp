@@ -15,7 +15,6 @@ int main()
 
 	// sotrudnik :
 
-
 	/*sotrudnik arr[maxn];
 
 	int k = 0;

@@ -57,7 +57,22 @@ public:
 
 	void Print_Coord()
 	{
-		printf("(%f, %f)", x, y);
+		printf(" (%f, %f) ", x, y);
+	}
+	// + +=
+	Point& operator+(Point& other)
+	{
+		Point rez;
+		rez.x = x + other.x;
+		rez.y = y + other.y;
+		return rez;
+	}
+
+	Point& operator+=(Point other)
+	{
+		x += other.x;
+		y += other.y;
+		return *this;
 	}
 };
 
@@ -69,57 +84,34 @@ class Triangle
 	static int amount ;
 
 public:
+	//> set get
+	Triangle();
 
-	Triangle()
-	{
-		char buff[18];
-		amount = 1;
-		sprintf(buff, "triangle %d", amount);
-		++amount;
-		side1 = side2 = side3 = 0;
-		name = new char[strlen(buff) + 1];
-		strcpy(name, buff);
-	}
+	double Pythagor(Point V1, Point V2);
 
-	double Pythagor(Point vertex1_, Point vertex2_)
-	{
-		return sqrt(pow((vertex1_.Get_x() - vertex2_.Get_x()), 2) + pow((vertex1_.Get_y() - vertex2_.Get_y()), 2));
-	}
-
-	Triangle(Point v1, Point v2, Point v3)
-	{
-		char buff[18];
-		amount = 1;
-		sprintf(buff, "triangle %d", amount);
-		++amount;
-		a = v1; b = v2; c = v3;
-		side1 = Pythagor(v1, v2);
-		side2 = Pythagor(v2, v3);
-		side3 = Pythagor(v3, v1);
-		name = new char[strlen(buff) + 1];
-		strcpy(name, buff);
-	}
+	Triangle(Point v1, Point v2, Point v3);
 
 	~Triangle()
 	{
 		delete[] name;
 	}
 
-	double Area(double side1, double side2, double side3)
-	{
-		double halfPerimeter = (side1 + side2 + side3) / 2;
+	double Area();
 
-		return sqrt(halfPerimeter * (halfPerimeter - side1) * (halfPerimeter - side2) * (halfPerimeter - side3));
-	}
+	void Move_Triangle(double x_move, double y_move);
 
-	void Move_Triangle(double x_move,double y_move)
-	{
-		a.point_move(x_move, y_move);
-		b.point_move(x_move, y_move);
-		c.point_move(x_move, y_move);
-	}
+	void show();
 
+	void show_area_sides();
 
+	bool operator>(Triangle other);
+
+	void move_triangle(double x_move, double y_move);
+
+	bool is_in_triangle(Point x);
+
+	bool is_triangle_in(Triangle other);
+	// вкл триуг в триуг, 
 };
 
 
