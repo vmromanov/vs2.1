@@ -70,7 +70,7 @@ public:
 		return rez;
 	}
 
-	Point& operator+=(Point other)
+	Point& operator+=(Point& other)
 	{
 		x += other.x;
 		y += other.y;
@@ -91,14 +91,22 @@ public:
 
 	Triangle(double c1, double c2, double c3, double c4, double c5, double c6);
 
-	double Pythagor(Point V1, Point V2);
+	double Pythagor(Point& V1, Point& V2);
 
-	Triangle(Point v1, Point v2, Point v3);
+	Triangle(Point& v1, Point& v2, Point& v3);
 
 	~Triangle()
 	{
 		delete[] name;
 	}
+
+	double getside1() { return side1; }
+
+	double getside2() { return side2; }
+
+	double getside3() { return side3; }
+
+	char* getname() { return name; }
 
 	void setcord(Point& A, Point& B, Point& C);
 
@@ -112,11 +120,15 @@ public:
 
 	bool operator>(Triangle& other);
 
-	void move_triangle(double x_move, double y_move);
+	Triangle& operator= (Triangle & other);
+
+	bool is_inTriangle(Point& x); 
+
+	bool is_inTriangle(Triangle& other);  
 
 	bool is_in_triangle(Point& x);
 
-	bool is_triangle_in(Triangle& other);
+	bool is_contains(Triangle& other);
 	// вкл триуг в триуг, 
 };
 

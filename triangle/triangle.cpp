@@ -12,7 +12,7 @@ Triangle::Triangle()
 	strcpy(name, buff);
 }
 
-double Triangle::Pythagor(Point V1, Point V2)
+double Triangle::Pythagor(Point& V1, Point& V2)
 {
 	return sqrt(pow((V1.Get_x() - V2.Get_x()), 2) + pow((V1.Get_y() - V2.Get_y()), 2));
 }
@@ -36,7 +36,7 @@ Triangle::Triangle(double c1, double c2, double c3, double c4, double c5, double
 	strcpy(name, buff);
 }
 
-Triangle::Triangle(Point v1, Point v2, Point v3)
+Triangle::Triangle(Point& v1, Point& v2, Point& v3)
 {
 	char buff[18];
 	sprintf(buff, "triangle %d", amount);
@@ -62,6 +62,13 @@ double Triangle::Area()
 	double halfPerimeter = (side1 + side2 + side3) / 2;
 
 	return sqrt(halfPerimeter * (halfPerimeter - side1) * (halfPerimeter - side2) * (halfPerimeter - side3));
+}
+
+double AREA(Triangle& x)
+{
+	double halfPerimeter = (x.getside1() + x.getside2() + x.getside3()) / 2;
+
+	return sqrt(halfPerimeter * (halfPerimeter - x.getside1()) * (halfPerimeter - x.getside2()) * (halfPerimeter - x.getside3()));
 }
 
 void Triangle::Move_Triangle(double x_move, double y_move)
@@ -96,11 +103,47 @@ bool Triangle::operator>(Triangle& other)
 	return false;
 }
 
-void Triangle::move_triangle(double x_move, double y_move)
+Triangle& Triangle::operator= (Triangle& other)
 {
-	a.point_move(x_move, y_move);
-	b.point_move(x_move, y_move);
-	c.point_move(x_move, y_move);
+	a = other.a;
+	b = other.b;
+	c = other.c;
+	side1 = other.side1;
+	side2 = other.side2;
+	side3 = other.side3;
+	delete name;
+	name = new char[strlen(other.name) + 1];
+	strcpy(name, other.name);
+	return *this;
+}
+
+bool Triangle::is_inTriangle(Point& x)
+{
+	double x1, x2, x3, y1, y2, y3, x0, y0;
+	x1 = a.Get_x(); x2 = b.Get_x(); x3 = c.Get_x();
+	y1 = a.Get_y(); y2 = b.Get_y(); y3 = c.Get_y();
+	x0 = x.Get_x(); y0 = x.Get_y();
+	double area0, area1, area2, area3;
+	Triangle A(a, b, x);
+	Triangle B(b, c, x);
+	Triangle C(c, a, x);
+
+	area0 = Area();
+	area1 = AREA(A);
+	area2 = AREA(B);
+	area3 = AREA(C);
+
+	double resArea = area1 + area2 + area3;
+
+	if ((resArea <= area0 + 0.00001 && resArea > area0) || (resArea <= area0 && resArea > area0 - 0.00001))
+		return true;
+	return false;
+}
+
+bool Triangle::is_inTriangle(Triangle& other)
+{
+	if (is_inTriangle(other.a) && is_inTriangle(other.b) && is_inTriangle(other.c)) return true;
+	return false;
 }
 
 bool Triangle::is_in_triangle(Point& x)
@@ -126,14 +169,14 @@ bool Triangle::is_in_triangle(Point& x)
 	if (sign2 == 0 && sign1 == sign3) return true;
 	if (sign3 == 0 && sign2 == sign1)return true;
 
-	if (sign1 ==0&& sign2 == 0)return true;
+	if (sign1 == 0 && sign2 == 0)return true;
 	if (sign2 == 0 && sign3 == 0)return true;
 	if (sign3 == 0 && sign1 == 0)return true;
 
 	return false;
 }
 
-bool Triangle::is_triangle_in(Triangle& other)
+bool Triangle::is_contains(Triangle& other)
 {
 	if (is_in_triangle(other.a) && (is_in_triangle(other.b)) && (is_in_triangle(other.c))) return true;
 	return false;
