@@ -1,6 +1,6 @@
 ﻿#include "triangle.h"
 
-int Triangle::amount = 1;
+int Triangle::amount = 0;
 
 Triangle::Triangle() 
 {
@@ -80,7 +80,7 @@ void Triangle::Move_Triangle(double x_move, double y_move)
 
 void Triangle::show()
 {
-	printf("%s:", name);
+	printf("%s:\n", name);
 	a.Print_Coord(); b.Print_Coord(); c.Print_Coord();
 	printf("\n");
 }
@@ -105,15 +105,13 @@ bool Triangle::operator>(Triangle& other)
 
 Triangle& Triangle::operator= (Triangle& other)
 {
+	if (&other == this)return *this;
 	a = other.a;
 	b = other.b;
 	c = other.c;
 	side1 = other.side1;
 	side2 = other.side2;
 	side3 = other.side3;
-	delete name;
-	name = new char[strlen(other.name) + 1];
-	strcpy(name, other.name);
 	return *this;
 }
 

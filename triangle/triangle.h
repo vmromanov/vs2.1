@@ -76,6 +76,9 @@ public:
 		y += other.y;
 		return *this;
 	}
+
+	
+
 };
 
 class Triangle

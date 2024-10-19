@@ -26,7 +26,12 @@ void arr_expancion(Triangle* arr,int& size)
 	}
 
 	delete[] arr;
-	arr = tmp;
+	arr = new Triangle[size * 2];
+	for (int i = 0; i < size; ++i)
+	{
+		arr[i] = tmp[i];
+	}
+	delete[] tmp;
 
 	size *= 2;
 }
@@ -65,7 +70,6 @@ int main()
 	//Triangle a(1,2,1,2,1,2);
 	//a.show();
 
-	
 	//Triangle c(0, 0, 1, 1, -1, 2);
 	//Triangle a(0, 0, 1, 1, 0, 1);
 	//printf("k - %d", c.is_contains(a));
@@ -81,6 +85,7 @@ int main()
 	int main_option=0,option=0;
 	int size=0;
 	int amount = 0;
+	int is_alloc = 0;
 	while (main_option != 10)
 	{
 		Menu();
@@ -91,15 +96,20 @@ int main()
 		{
 		case 1:
 		{
-			delete[] arr;
-			printf("введите размер массива: ");
-			scanf("%d", &size);
-			while (size <= 0)
-			{
-				printf("Неверный ввод, размер не может быть меньше 0 или равен 0\n->");
+			if (!is_alloc) {
+				is_alloc = 1;
+				delete[] arr;
+				printf("введите размер массива: ");
 				scanf("%d", &size);
+				while (size <= 0)
+				{
+					printf("Неверный ввод, размер не может быть меньше 0 или равен 0\n->");
+					scanf("%d", &size);
+				}
+				arr = new Triangle[size];
 			}
-			arr = new Triangle[size];
+			else printf("память уже была выделена\n");
+
 
 			system("pause");
 
@@ -110,9 +120,9 @@ int main()
 			{
 			Point pArr[3];
 			double x, y;
+			printf("введите координыты. Формат:x0 y0 x1 y1 x2 y2\n");
 			for (int i = 1; i <= 3; ++i)
 			{
-				printf("введите координыты %dй точки. Формат:x y\n", i);
 				scanf("%lf %lf", &x, &y);
 				pArr[i - 1].set_point(x, y);
 			}
@@ -124,6 +134,7 @@ int main()
 				system("pause");
 				break;
 			}
+
 			if (amount == size)
 			{
 				arr_expancion(arr, size);
@@ -131,6 +142,7 @@ int main()
 
 			arr[amount] = tmp;
 			++amount;
+
 			}
 
 			system("pause");
@@ -147,7 +159,7 @@ int main()
 
 		case 4:
 			{
-			printf("что вы хотите показать?");
+			printf("что вы хотите показать?\n");
 			printf("1 - координаты вершин\n");
 			printf("2 - площядь и стороны\n");
 			printf("-> ");
@@ -170,7 +182,7 @@ int main()
 				}
 			}
 
-
+			break;
 			}
 
 		case 5:
@@ -227,7 +239,7 @@ int main()
 			int numb;
 			printf("введите номер треугольника для удаления\n");
 			numb = Option_Choose(amount);
-			for (int i = numb; i <= amount; ++i)
+			for (int i = numb-1; i <= amount; ++i)
 				arr[i] = arr[i + 1];
 			
 			--amount;
@@ -241,12 +253,12 @@ int main()
 		case 9:
 			{
 
-			printf("список треугольников:");
+			printf("список треугольников:\n");
 			for (int i = 0; i < amount; ++i)
 			{
 				arr[i].show();
 				arr[i].show_area_sides();
-				printf("--------\n");
+				printf("------------------\n");
 			}
 			system("pause");
 			break;
@@ -255,7 +267,7 @@ int main()
 
 
 	}
-
+	
 
 	
 	return 0;
