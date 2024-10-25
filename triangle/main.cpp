@@ -15,24 +15,24 @@ int Option_Choose(int options_amount)
 	return choose;
 }
 
-void arr_expancion(Triangle* arr,int& size) 
+void arr_expancion(Triangle*& arr,int& size) 
 {
-	Triangle* tmp = new Triangle[size * 2];
-	if (tmp == nullptr) throw -1;
+	Triangle* temp = new Triangle[size*2];
 
-	for (int i = 0; i < size; ++i)
+	for (size_t i = 0; i < size; ++i)
 	{
-		tmp[i] = arr[i];
+		temp[i] = arr[i];
 	}
 
 	delete[] arr;
-	arr = new Triangle[size * 2];
-	for (int i = 0; i < size; ++i)
-	{
-		arr[i] = tmp[i];
-	}
-	delete[] tmp;
 
+	arr->set_amount(1);
+
+	arr = new Triangle[size*2 ];
+	for (size_t i = 0; i < size; ++i)
+	{
+		arr[i] = temp[i];
+	}
 	size *= 2;
 }
 
@@ -49,16 +49,16 @@ bool is_triangle(Triangle& a)
 void Menu()
 {
 	system("cls");
-	printf("1 - создать массив треугольников\n");
-	printf("2 - добавить треугольник\n");
-	printf("3 - показать площядь одного из треугольников\n");
-	printf("4 - показать треугольник\n");
-	printf("5 - проверить вхождение одного треугольника в другой\n");
-	printf("6 - сдвинуть один из треугольников\n");
-	printf("7 - сравнить два треугольника по площяди\n");
-	printf("8 - удалить треугольник\n");
-	printf("9 - показать список треугольников\n");
-	printf("10 - выход\n");
+	printf("1 - создать массив треугольников//create\n");
+	printf("2 - добавить треугольник//add\n");
+	printf("3 - показать площядь одного из треугольников//area\n");
+	printf("4 - показать треугольник//show\n");
+	printf("5 - проверить вхождение одного треугольника в другой//check is 1 in 2\n");
+	printf("6 - сдвинуть один из треугольников//move\n");
+	printf("7 - сравнить два треугольника по площяди//area compare\n");
+	printf("8 - удалить треугольник//del\n");
+	printf("9 - показать список треугольников//show list\n");
+	printf("10 - выход//exit\n");
 	printf("-> ");
 }
 
@@ -84,8 +84,12 @@ int main()
 	Triangle* arr=new Triangle[1];
 	int main_option=0,option=0;
 	int size=0;
-	int amount = 0;
 	int is_alloc = 0;
+	/*arr->set_amount(10);
+	arr->print_amount();
+	arr->set_amount(5);
+	arr->print_amount();*/
+	int real_size = 0;
 	while (main_option != 10)
 	{
 		Menu();
@@ -135,25 +139,30 @@ int main()
 				break;
 			}
 
-			if (amount == size)
+			if (real_size == size)
 			{
 				arr_expancion(arr, size);
 			}
 
-			arr[amount] = tmp;
-			++amount;
-
-			}
+			arr[real_size] = tmp;
+			real_size++;
 
 			system("pause");
+
 			break;
+			}
+
+			
 
 		case 3:
 			{
-			printf("введите номер треугольника\n");
-			int numb = Option_Choose(amount);
-			printf("площадь у %s : %lf\n", arr[numb - 1].getname(), arr[numb - 1].Area());
-			system("pause");
+			if (main_option == 3) 
+			{
+				printf("введите номер треугольника\n");
+				int numb = Option_Choose(arr->get_amount());
+				printf("площадь у %s : %lf\n", arr[numb - 1].getname(), arr[numb - 1].Area());
+				system("pause");
+			}
 			break;
 			}
 
@@ -165,7 +174,7 @@ int main()
 			printf("-> ");
 			option = Option_Choose(2);
 			printf(" введите номер треугольника который хотите вывести\n-> ");
-			int numbt = Option_Choose(amount);
+			int numbt = Option_Choose(arr->get_amount());
 			switch (option)
 			{
 			case 1:
@@ -189,9 +198,9 @@ int main()
 			{
 			int numb1, numb2;
 			printf("введите номер треугольника, вхождение куда вы хотите проверить\n");
-			numb1 = Option_Choose(amount);
+			numb1 = Option_Choose(real_size);
 			printf("введите номер треугольника, который вы хотите проверить на вхождение\n");
-			numb2 = Option_Choose(amount);
+			numb2 = Option_Choose(real_size);
 			if (arr[numb1 - 1].is_contains(arr[numb2 - 1]))
 			{
 				printf("да, входит\n");
@@ -207,7 +216,7 @@ int main()
 			int numb = 0;
 			double dx, dy;
 			printf("введите номер треугольника для сдвига\n");
-			numb = Option_Choose(amount);
+			numb = Option_Choose(arr->get_amount());
 			printf("введите сдвиг: сдвиг_x сдвиг_y\n");
 			scanf("%lf %lf", &dx, &dy);
 
@@ -223,10 +232,10 @@ int main()
 			int numb1, numb2;
 			printf("проверка,площядб треугольника А больше площяди треугольника Б\n");
 			printf("введите номер треугольника А\n");
-			numb1 = Option_Choose(amount);
+			numb1 = Option_Choose(real_size);
 			printf("введите номер треугольника Б\n");
-			numb2 = Option_Choose(amount);
-			if (arr[numb1 - 1] > arr[numb2 - 1]) printf("да, больше\n");
+			numb2 = Option_Choose(real_size);
+			if (arr[numb1 - 1] > arr[real_size - 1]) printf("да, больше\n");
 			else printf("нет, не больше\n");
 
 			system("pause");
@@ -238,11 +247,11 @@ int main()
 			{
 			int numb;
 			printf("введите номер треугольника для удаления\n");
-			numb = Option_Choose(amount);
-			for (int i = numb-1; i <= amount; ++i)
+			numb = Option_Choose(real_size);
+			for (int i = numb-1; i <= real_size; ++i)
 				arr[i] = arr[i + 1];
 			
-			--amount;
+			arr->dec_amount();
 
 			printf("треугольник удалён\n");
 
@@ -254,7 +263,7 @@ int main()
 			{
 
 			printf("список треугольников:\n");
-			for (int i = 0; i < amount; ++i)
+			for (int i = 0; i < real_size; ++i)
 			{
 				arr[i].show();
 				arr[i].show_area_sides();

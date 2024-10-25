@@ -103,6 +103,16 @@ public:
 		delete[] name;
 	}
 
+	int get_amount();
+
+	void set_amount(int n);
+
+	void inc_amount();
+
+	void dec_amount();
+
+	void print_amount();
+
 	double getside1() { return side1; }
 
 	double getside2() { return side2; }

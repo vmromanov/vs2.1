@@ -17,6 +17,31 @@ double Triangle::Pythagor(Point& V1, Point& V2)
 	return sqrt(pow((V1.Get_x() - V2.Get_x()), 2) + pow((V1.Get_y() - V2.Get_y()), 2));
 }
 
+int Triangle::get_amount()
+{
+	return amount;
+}
+
+void Triangle::inc_amount()
+{
+	amount++;
+}
+
+void Triangle::dec_amount()
+{
+	amount--;
+}
+
+void Triangle::print_amount()
+{
+	printf("am: %d\n", amount);
+}
+
+void Triangle::set_amount(int n)
+{
+	amount = n;
+}
+
 Triangle::Triangle(double c1, double c2, double c3, double c4, double c5, double c6)
 {
 	Point A(c1, c2);
