@@ -1,4 +1,5 @@
 #pragma once
+
 class Matrix
 {
 protected:
@@ -47,10 +48,9 @@ public:
 
 	int get_coll() { return column; }
 
-	void transpon();
+	virtual void transpon();
 	
 	void print();
-	
 };
 
 
