@@ -39,6 +39,13 @@ Matrix::~Matrix()
 	delete[] matrix;
 }
 
+void Matrix::input()
+{
+	for (int i = 0; i < row; i++)
+		for (int j = 0; j < column; j++)
+			if (!scanf_s("%lf", &matrix[i][j])) throw 4;
+}
+
 void Matrix::transpon()
 {
 	Matrix temp(*this);
@@ -57,8 +64,9 @@ void Matrix::transpon()
 
 double* Matrix::operator[](int i)
 {
-	if (i<0 || i>row)
-		return matrix[i];
+	if (i<0 || i>=row) throw 4;
+
+	return matrix[i];
 }
 
 Matrix& Matrix::operator=(Matrix& other)
@@ -143,6 +151,23 @@ Matrix& Matrix::operator*(Matrix& other) const
 	return res;
 }
 
+Matrix Matrix::operator*=(Matrix& other) 
+{
+	if (row != other.column || column != other.row)
+		throw 3;
+
+	Matrix res(row, other.column);
+
+	for (int i = 0; i < row; ++i)
+		for (int j = 0; j < res.column; ++j)
+			for (int k = 0; k < column; ++k)
+				res[i][j] = matrix[i][k] * other[k][j];
+
+	*this = res;
+
+	return (*this);
+}
+
 Matrix& Matrix::operator*(double el) const
 {
 	Matrix res(row, column);
@@ -220,7 +245,7 @@ void Matrix::print()
 	for (int i = 0; i < row; i++)
 	{
 		for (int j = 0; j < column; j++)
-			std::cout << matrix[i][j];
+			std::cout << matrix[i][j]<<' ';
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;

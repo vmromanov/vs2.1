@@ -14,6 +14,8 @@ public:
 	
 	virtual ~Matrix();
 
+	void input();
+
 	double* operator[](int i);
 
 	Matrix& operator=(Matrix& other);
@@ -27,6 +29,8 @@ public:
 	Matrix& operator-=(Matrix& other);
 
 	Matrix& operator*(Matrix& other) const;
+
+	Matrix operator*=(Matrix& other);
 
 	Matrix& operator/(double el) const;
 
