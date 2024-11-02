@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+using namespace std;
 
 class Matrix
 {
@@ -17,6 +19,8 @@ public:
 	void input();
 
 	double* operator[](int i);
+
+	double* operator[](int i) const;
 
 	Matrix& operator=(Matrix& other);
 	
@@ -40,6 +44,10 @@ public:
 
 	Matrix& operator*=(double el);
 	
+	friend ostream& operator<<(ostream& stream, const Matrix& M);
+
+	friend istream& operator>>(istream& stream, Matrix& M);
+
 	virtual bool operator==(Matrix& other) const;
 
 	bool operator!=(Matrix& other_);

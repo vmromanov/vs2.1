@@ -1,5 +1,6 @@
 #include "Sq_matrix.h"
-
+#include <iostream>
+using namespace std;
 Sq_matrix::Sq_matrix(Sq_matrix& other):Matrix(other.row,other.row)
 {
 	for (int i = 0; i < row; i++)
@@ -33,19 +34,19 @@ void Sq_matrix::transpon()
 		}
 }
 
-Sq_matrix& Sq_matrix::operator*(Sq_matrix& other)
+Sq_matrix Sq_matrix::operator*(Sq_matrix& other)
 {
 	Sq_matrix res(row);
 
 	for (int i = 0; i < row; ++i) 
 		for (int j = 0; j < res.column; ++j) 
 			for (int k = 0; k < column; ++k) 
-				res[i][j] = matrix[i][k] * other[k][j]; 
+				res[i][j] += matrix[i][k] * other[k][j]; 
 	 
 	return res; 
 }
 
-Sq_matrix Sq_matrix::operator*=(double el)
+Sq_matrix& Sq_matrix::operator*=(double el)
 {
 	for (int i = 0; i < row; i++)
 		for (int j = 0; j < row; j++)
@@ -54,7 +55,7 @@ Sq_matrix Sq_matrix::operator*=(double el)
 	return (*this);
 }
 
-Sq_matrix& Sq_matrix::operator*(double el)
+Sq_matrix Sq_matrix::operator*(double el)
 {
 	Sq_matrix res(row);
 
@@ -65,7 +66,7 @@ Sq_matrix& Sq_matrix::operator*(double el)
 	return res;
 }
 
-Sq_matrix& Sq_matrix::operator+(Sq_matrix& other)
+Sq_matrix Sq_matrix::operator+(Sq_matrix& other)
 {
 	Sq_matrix res(row);
 	for (int i = 0; i < row; ++i)
@@ -74,13 +75,31 @@ Sq_matrix& Sq_matrix::operator+(Sq_matrix& other)
 	return res;
 }
 
-Sq_matrix Sq_matrix::operator+=(Sq_matrix& other)
+Sq_matrix& Sq_matrix::operator+=(Sq_matrix& other)
 {
 	for (int i = 0; i < row; ++i)
 		for (int j = 0; j < column; ++j)
 			matrix[i][j] += other[i][j];
 
 	return(*this);
+}
+
+Sq_matrix Sq_matrix::operator-(Sq_matrix& other)
+{
+	Sq_matrix res(row);
+	for (int i = 0; i < row; ++i)
+		for (int j = 0; j < column; ++j)
+			res.matrix[i][j] = matrix[i][j] - other.matrix[i][j];
+	return res;
+}
+
+Sq_matrix& Sq_matrix::operator-=(Sq_matrix& other)
+{
+	for (int i = 0; i < row; ++i)
+		for (int j = 0; j < column; ++j)
+			 matrix[i][j] -= other.matrix[i][j];
+
+	return *this;
 }
 
 bool Sq_matrix::operator==(Sq_matrix& other)
@@ -110,7 +129,7 @@ Sq_matrix& Sq_matrix::operator*=(Sq_matrix& other)
 	for (int i = 0; i < row; ++i)
 		for (int j = 0; j < res.column; ++j)
 			for (int k = 0; k < column; ++k)
-				res[i][j] = matrix[i][k] * other[k][j];
+				res[i][j] += matrix[i][k] * other[k][j];
 
 	*this = res;
 	
@@ -119,7 +138,7 @@ Sq_matrix& Sq_matrix::operator*=(Sq_matrix& other)
 
 
 
-Sq_matrix& Sq_matrix::pow(int k)
+Sq_matrix Sq_matrix::pow(int k)
 {
 	if (k < 0)throw 5;
 
@@ -142,7 +161,7 @@ double* Sq_matrix::operator[](int i)
 	return matrix[i];
 }
 
-Sq_matrix& Sq_matrix::operator=(Sq_matrix& other)
+Sq_matrix& Sq_matrix::operator=(const Sq_matrix& other)
 {
 	if (&other == this)return *this;
 
@@ -161,9 +180,10 @@ Sq_matrix& Sq_matrix::operator=(Sq_matrix& other)
 			matrix[i][j] = other[i][j];
 
 	return *this;
+
 }
 
-Sq_matrix& Sq_matrix::operator^(int k)
+Sq_matrix Sq_matrix::operator^(int k)
 {
 	if (k < 0)throw 5;
 
@@ -178,5 +198,3 @@ Sq_matrix& Sq_matrix::operator^(int k)
 
 	return res;
 }
-
-

@@ -1,5 +1,5 @@
 #include "Matrix.h"
-#include <iostream>
+
 Matrix::Matrix(int r, int col)
 {
 	{
@@ -65,6 +65,13 @@ void Matrix::transpon()
 double* Matrix::operator[](int i)
 {
 	if (i<0 || i>=row) throw 4;
+
+	return matrix[i];
+}
+
+double* Matrix::operator[](int i) const
+{
+	if (i < 0 || i >= row) throw 4;
 
 	return matrix[i];
 }
@@ -224,6 +231,28 @@ bool Matrix::operator!=(Matrix& other)
 			if (matrix[i][j] != other[i][j])
 				return true;
 	return false;
+}
+
+ostream& operator<<(ostream& stream, const Matrix& M)
+{
+	for (int i = 0; i < M.row; i++)
+	{
+		for (int j = 0; j < M.column; j++)
+			stream << M[i][j] << ' ';
+		stream << endl;
+	}
+	stream << endl;
+
+	return stream;
+}
+
+istream& operator>>(istream& stream, Matrix& M)
+{
+	for (int i = 0; i < M.row; i++)
+		for (int j = 0; j < M.column; j++)
+			stream >> M[i][j];
+
+	return stream;
 }
 
 void Matrix::set_el(double el, int r, int coll)

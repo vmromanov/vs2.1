@@ -1,5 +1,6 @@
 #pragma once
 #include "Matrix.h"
+
 class Sq_matrix : public Matrix
 {
 public:
@@ -11,25 +12,31 @@ public:
 
 	void transpon() override;
 
-	Sq_matrix& pow(int i);
+	Sq_matrix pow(int i);
 
 	double* operator[](int i);
 
-	Sq_matrix& operator=(Sq_matrix& other);
+	double* operator[](int i) const { return matrix[i]; }
 
-	Sq_matrix& operator^(int i);
+	Sq_matrix& operator=(const Sq_matrix& other);
+
+	Sq_matrix operator^(int i);
 
 	Sq_matrix& operator*=(Sq_matrix& other);
 
-	Sq_matrix& operator*(Sq_matrix& other);
+	Sq_matrix operator*(Sq_matrix& other);
 
-	Sq_matrix operator*=(double el);
+	Sq_matrix& operator*=(double el);
 
-	Sq_matrix& operator*(double el);
+	Sq_matrix operator*(double el);
 
-	Sq_matrix& operator+(Sq_matrix& other);
+	Sq_matrix operator+(Sq_matrix& other);
 
-	Sq_matrix operator+=(Sq_matrix& other);
+	Sq_matrix& operator+=(Sq_matrix& other);
+
+	Sq_matrix operator-(Sq_matrix& other);
+
+	Sq_matrix& operator-=(Sq_matrix& other);
 
 	bool operator==(Sq_matrix& other);
 
