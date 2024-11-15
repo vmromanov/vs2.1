@@ -1,5 +1,6 @@
 #pragma once
 #include "Matrix.h"
+#include "Vector.h"
 
 class Sq_matrix : public Matrix
 {
@@ -11,6 +12,8 @@ public:
 	Sq_matrix(Matrix& other);
 
 	void transpon() override;
+
+	double Determinant();
 
 	Sq_matrix pow(int i);
 
@@ -43,3 +46,4 @@ public:
 	bool operator!=(Sq_matrix& other);
 };
 
+Vector Max_from_Diagonals(Sq_matrix& matrix_);

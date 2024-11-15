@@ -62,6 +62,8 @@ void Matrix::transpon()
 			matrix[i][j] = temp[j][i];
 }
 
+
+
 double* Matrix::operator[](int i)
 {
 	if (i<0 || i>=row) throw 4;
@@ -278,4 +280,17 @@ void Matrix::print()
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
+}
+
+double Min(Matrix& matrix_)
+{
+	double min = matrix_[0][0];
+
+	int row = matrix_.get_row();
+	int column = matrix_.get_coll();
+	for (int i = 1; i < row; i++)
+		for (int j = 0; j < column; j++)
+			if (min > matrix_[i][j]) min = matrix_[i][j];
+
+	return min;
 }

@@ -34,6 +34,35 @@ void Sq_matrix::transpon()
 		}
 }
 
+double Sq_matrix::Determinant()
+{
+	double determinant = 0;
+
+	if (row == 1)
+		return matrix[0][0];
+
+	Sq_matrix tmp_matrix(row - 1);
+
+	for (int i = 0; i < row; i++)
+	{
+		int subi = 0;
+		for (int v = 1; v < row; v++)
+		{
+			int subj = 0;
+			for (int w = (subj == i) ? (1) : (0); w < row; (subj == i) ? (w = w + 2) : (w++))
+			{
+				tmp_matrix[subi][subj] = matrix[v][w];
+				subj++;
+			}
+			subi++;
+		}
+		determinant += ((i % 2 ? -1 : 1) * matrix[0][i]) * tmp_matrix.Determinant();
+	}
+
+
+	return determinant;
+}
+
 Sq_matrix Sq_matrix::operator*(Sq_matrix& other)
 {
 	Sq_matrix res(row);
@@ -136,8 +165,6 @@ Sq_matrix& Sq_matrix::operator*=(Sq_matrix& other)
 	return (*this);
 }
 
-
-
 Sq_matrix Sq_matrix::pow(int k)
 {
 	if (k < 0)throw 5;
@@ -197,4 +224,35 @@ Sq_matrix Sq_matrix::operator^(int k)
 			res = res * (*this);
 
 	return res;
+}
+
+Vector Max_from_Diagonals(Sq_matrix& matrix_)
+{
+	int size = matrix_.get_row() * 2 - 1;
+	Vector array(nullptr, size);
+
+	int index = 0;
+
+	for (int i = matrix_.get_row() - 1; i >= 0; i--)
+	{
+		double diagonal1 = 0;
+		double diagonal2 = 0;
+		int temp = i;
+
+		for (int j = 0; j < matrix_.get_row() - i; j++)
+		{
+			if (diagonal1 < matrix_[temp][j]) diagonal1 = matrix_[temp][j];
+			if (diagonal2 < matrix_[j][temp]) diagonal2 = matrix_[j][temp];
+
+			temp++;
+		}
+
+		array[index] = diagonal1;
+		if (i != 0)
+			array[size - 1 - index] = diagonal2;
+		index++;
+	}
+
+
+	return array;
 }

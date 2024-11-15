@@ -65,6 +65,5 @@ public:
 	void print();
 };
 
-
-
+double Min(Matrix& matrix_);
 
