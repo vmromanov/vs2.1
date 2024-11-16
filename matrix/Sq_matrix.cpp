@@ -174,7 +174,6 @@ Sq_matrix Sq_matrix::pow(int k)
 	for (int i = 0; i < row; i++)
 		res[i][i] = 1;
 
-	for (int i = 0; i < row; i++)
 		for (int i = 1; i <= k; i++)
 			res = res * (*this);
 
@@ -210,7 +209,7 @@ Sq_matrix& Sq_matrix::operator=(const Sq_matrix& other)
 
 }
 
-Sq_matrix Sq_matrix::operator^(int k)
+Sq_matrix& Sq_matrix::operator^(int k)
 {
 	if (k < 0)throw 5;
 
@@ -218,31 +217,34 @@ Sq_matrix Sq_matrix::operator^(int k)
 
 	for (int i = 0; i < row; i++)
 		res[i][i] = 1;
-
-	for (int i = 0; i < row; i++)
+	
 		for (int i = 1; i <= k; i++)
 			res = res * (*this);
+			
+		
 
-	return res;
+	(*this) = res;
+
+	return *this;
 }
 
-Vector Max_from_Diagonals(Sq_matrix& matrix_)
+Vector Max_from_Diagonals(Sq_matrix& matr)
 {
-	int size = matrix_.get_row() * 2 - 1;
+	int size = matr.get_row() * 2 - 1;
 	Vector array(nullptr, size);
 
 	int index = 0;
-
-	for (int i = matrix_.get_row() - 1; i >= 0; i--)
+	int rv = matr.get_row();
+	for (int i = rv - 1; i >= 0; i--)
 	{
 		double diagonal1 = 0;
 		double diagonal2 = 0;
 		int temp = i;
 
-		for (int j = 0; j < matrix_.get_row() - i; j++)
+		for (int j = 0; j < rv - i; j++)
 		{
-			if (diagonal1 < matrix_[temp][j]) diagonal1 = matrix_[temp][j];
-			if (diagonal2 < matrix_[j][temp]) diagonal2 = matrix_[j][temp];
+			if (diagonal1 < matr[temp][j]) diagonal1 = matr[temp][j];
+			if (diagonal2 < matr[j][temp]) diagonal2 = matr[j][temp];
 
 			temp++;
 		}

@@ -97,7 +97,7 @@ Matrix& Matrix::operator=(Matrix& other)
 	return *this;
 }
 
-Matrix& Matrix::operator+(Matrix& other) const
+Matrix Matrix::operator+(Matrix& other) const
 {
 	if (row != other.row || column != other.column)
 		throw 2;
@@ -121,7 +121,7 @@ Matrix& Matrix::operator+=(Matrix& other)
 	return *this;
 }
 
-Matrix& Matrix::operator-(Matrix& other) const
+Matrix Matrix::operator-(Matrix& other) const
 {
 	if (row != other.row || column != other.column)
 		throw 2;
@@ -145,7 +145,7 @@ Matrix& Matrix::operator-=(Matrix& other)
 	return *this;
 }
 
-Matrix& Matrix::operator*(Matrix& other) const
+Matrix Matrix::operator*(Matrix& other) const
 {
 	if (row != other.column || column != other.row)
 		throw 3;
@@ -160,7 +160,7 @@ Matrix& Matrix::operator*(Matrix& other) const
 	return res;
 }
 
-Matrix Matrix::operator*=(Matrix& other) 
+Matrix& Matrix::operator*=(Matrix& other) 
 {
 	if (row != other.column || column != other.row)
 		throw 3;
@@ -177,7 +177,7 @@ Matrix Matrix::operator*=(Matrix& other)
 	return (*this);
 }
 
-Matrix& Matrix::operator*(double el) const
+Matrix Matrix::operator*(double el) const
 {
 	Matrix res(row, column);
 	for (int i = 0; i < row; i++)
@@ -194,7 +194,7 @@ Matrix& Matrix::operator*=(double el)
 	return *this;
 }
 
-Matrix& Matrix::operator/(double el) const
+Matrix Matrix::operator/(double el) const
 {
 	Matrix res(row, column);
 	for (int i = 0; i < row; i++)

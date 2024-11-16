@@ -24,23 +24,23 @@ public:
 
 	Matrix& operator=(Matrix& other);
 	
-	Matrix& operator+(Matrix& other) const;
+	Matrix operator+(Matrix& other) const;
 
 	Matrix& operator+=(Matrix& other);
 
-	Matrix& operator-(Matrix& other) const;
+	Matrix operator-(Matrix& other) const;
 	
 	Matrix& operator-=(Matrix& other);
 
-	Matrix& operator*(Matrix& other) const;
+	Matrix operator*(Matrix& other) const;
 
-	Matrix operator*=(Matrix& other);
+	Matrix& operator*=(Matrix& other);
 
-	Matrix& operator/(double el) const;
+	Matrix operator/(double el) const;
 
 	Matrix& operator/=(double el);
 
-	Matrix& operator*(double el) const;
+	Matrix operator*(double el) const;
 
 	Matrix& operator*=(double el);
 	

@@ -23,7 +23,7 @@ public:
 
 	Sq_matrix& operator=(const Sq_matrix& other);
 
-	Sq_matrix operator^(int i);
+	Sq_matrix& operator^(int i);
 
 	Sq_matrix& operator*=(Sq_matrix& other);
 
