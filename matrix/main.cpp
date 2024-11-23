@@ -26,7 +26,7 @@ int main()
 	Matrix b(2, 3);
 	Matrix c(3, 4);
 	Sq_matrix A(2);
-	Sq_matrix C(2); 
+	Sq_matrix C(2);
 	Sq_matrix B(3);
 	cout << "input a(3*4), b(2*3), c(3*4):\n";
 	cin >> a >> b >> c;
@@ -38,7 +38,7 @@ int main()
 	cout <<"A:\n" << A <<"B:\n"<< B<<"C:\n"<<C;
 	cout << "a:\n" << a << "b:\n" << b << "c:\n" << c;
 	try {
-		cout << "A*B:\n" << (A * C);
+		cout << "A*C:\n" << (A * C);
 	}
 	catch (const int)
 	{
@@ -60,7 +60,7 @@ int main()
 	{
 		cout << "нельзя складывать матрицы разного размера\n";
 	}
-
+	
 	try {
 		cout << "a-c:\n";
 		cout<< (a - c);
@@ -71,7 +71,7 @@ int main()
 	{
 		cout << "нельзя вычитать матрицы разных размеров\n";
 	}
-
+	
 	try
 	{
 		cout << "a[1][1]:\n";
@@ -109,7 +109,6 @@ int main()
 	{
 		cout << "нельзя возводить в отрицательную степень\n";
 	}
-
-
+	
 	return 0;
 }

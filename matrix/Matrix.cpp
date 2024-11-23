@@ -105,7 +105,7 @@ Matrix Matrix::operator+(Matrix& other) const
 	Matrix res(row, column);
 	for (int i = 0; i < row; ++i)
 		for (int j = 0; j < column; ++j)
-			res.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
+			res[i][j] = matrix[i][j] + other[i][j];
 	return res;
 }
 

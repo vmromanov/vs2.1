@@ -63,17 +63,17 @@ double Sq_matrix::Determinant()
 	return determinant;
 }
 
-Sq_matrix Sq_matrix::operator*(Sq_matrix& other)
-{
-	Sq_matrix res(row);
-
-	for (int i = 0; i < row; ++i) 
-		for (int j = 0; j < res.column; ++j) 
-			for (int k = 0; k < column; ++k) 
-				res[i][j] += matrix[i][k] * other[k][j]; 
-	 
-	return res; 
-}
+//Sq_matrix Sq_matrix::operator*(Sq_matrix& other)
+//{
+//	Sq_matrix res(row);
+//
+//	for (int i = 0; i < row; ++i) 
+//		for (int j = 0; j < res.column; ++j) 
+//			for (int k = 0; k < column; ++k) 
+//				res[i][j] += matrix[i][k] * other[k][j]; 
+//	 
+//	return res; 
+//}
 
 Sq_matrix& Sq_matrix::operator*=(double el)
 {
@@ -84,25 +84,25 @@ Sq_matrix& Sq_matrix::operator*=(double el)
 	return (*this);
 }
 
-Sq_matrix Sq_matrix::operator*(double el)
-{
-	Sq_matrix res(row);
+//Sq_matrix Sq_matrix::operator*(double el)
+//{
+//	Sq_matrix res(row);
+//
+//	for (int i = 0; i < row; i++)
+//		for (int j = 0; j < row; j++)
+//			res[i][j] = matrix[i][j] * el;
+//
+//	return res;
+//}
 
-	for (int i = 0; i < row; i++)
-		for (int j = 0; j < row; j++)
-			res[i][j] = matrix[i][j] * el;
-
-	return res;
-}
-
-Sq_matrix Sq_matrix::operator+(Sq_matrix& other)
-{
-	Sq_matrix res(row);
-	for (int i = 0; i < row; ++i)
-		for (int j = 0; j < column; ++j)
-			res.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
-	return res;
-}
+//Sq_matrix Sq_matrix::operator+(Sq_matrix& other)
+//{
+//	Sq_matrix res(row);
+//	for (int i = 0; i < row; ++i)
+//		for (int j = 0; j < column; ++j)
+//			res.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
+//	return res;
+//}
 
 Sq_matrix& Sq_matrix::operator+=(Sq_matrix& other)
 {
@@ -113,14 +113,14 @@ Sq_matrix& Sq_matrix::operator+=(Sq_matrix& other)
 	return(*this);
 }
 
-Sq_matrix Sq_matrix::operator-(Sq_matrix& other)
-{
-	Sq_matrix res(row);
-	for (int i = 0; i < row; ++i)
-		for (int j = 0; j < column; ++j)
-			res.matrix[i][j] = matrix[i][j] - other.matrix[i][j];
-	return res;
-}
+//Sq_matrix Sq_matrix::operator-(Sq_matrix& other)
+//{
+//	Sq_matrix res(row);
+//	for (int i = 0; i < row; ++i)
+//		for (int j = 0; j < column; ++j)
+//			res.matrix[i][j] = matrix[i][j] - other.matrix[i][j];
+//	return res;
+//}
 
 Sq_matrix& Sq_matrix::operator-=(Sq_matrix& other)
 {
@@ -175,7 +175,7 @@ Sq_matrix Sq_matrix::pow(int k)
 		res[i][i] = 1;
 
 		for (int i = 1; i <= k; i++)
-			res = res * (*this);
+			res *= (*this);
 
 	return res;
 }
@@ -209,7 +209,7 @@ Sq_matrix& Sq_matrix::operator=(const Sq_matrix& other)
 
 }
 
-Sq_matrix& Sq_matrix::operator^(int k)
+Sq_matrix Sq_matrix::operator^(int k)
 {
 	if (k < 0)throw 5;
 
@@ -219,13 +219,13 @@ Sq_matrix& Sq_matrix::operator^(int k)
 		res[i][i] = 1;
 	
 		for (int i = 1; i <= k; i++)
-			res = res * (*this);
+			res *= (*this);
 			
 		
 
-	(*this) = res;
+	
 
-	return *this;
+	return res;
 }
 
 Vector Max_from_Diagonals(Sq_matrix& matr)

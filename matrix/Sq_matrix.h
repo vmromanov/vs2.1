@@ -20,24 +20,19 @@ public:
 	double* operator[](int i);
 
 	double* operator[](int i) const { return matrix[i]; }
+	using Matrix::operator*;
+	using Matrix::operator+;
+	using Matrix::operator-;
 
 	Sq_matrix& operator=(const Sq_matrix& other);
 
-	Sq_matrix& operator^(int i);
+	Sq_matrix operator^(int i);
 
 	Sq_matrix& operator*=(Sq_matrix& other);
 
-	Sq_matrix operator*(Sq_matrix& other);
-
 	Sq_matrix& operator*=(double el);
 
-	Sq_matrix operator*(double el);
-
-	Sq_matrix operator+(Sq_matrix& other);
-
 	Sq_matrix& operator+=(Sq_matrix& other);
-
-	Sq_matrix operator-(Sq_matrix& other);
 
 	Sq_matrix& operator-=(Sq_matrix& other);
 
