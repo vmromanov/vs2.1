@@ -1,7 +1,7 @@
 
 #include "functions.h"
 
-Line::Line(double a, double b, double args):Function(args)
+Line::Line(double args, double a, double b):Function(args)
 {
 	a = a;
 	b = b;
@@ -55,45 +55,26 @@ Polynom::Polynom(double arg):Function(arg)
 
 void Polynom::Calculate()
 {
-	cout << "Enter polynom.example:3x^5+7x^2-3" << endl << "-> ";
-	double coef = 0;
-	char buff;
-	while (cin.peek())
+	int degree ;
+	cout << "enter max degree\n-> ";
+	cin >> degree;
+	if (degree < 0) { cout << "нельзя брать степень < 0"; return; }
+	koef = new double[degree + 1];
+	cout << "введите аргументы начиная с наибольшей степени х:\n-> ";
+	for (int i = 0; i <= degree; i++)
+		cin >> koef[i];
+
+	cout << "введите х\n-> ";
+	cin >> argument;
+
+	double res = koef[0];
+	for (int i = 0; i < degree; i++)
 	{
-		cin >> coef;
-		if (cin.peek() != 'x')// если после числа не стоит х => ввод koef => просто свободный член
-		{
-			cin >> buff;
-			if (!cin.peek())
-			{
-				koef = new double[1];
-				koef[0] = coef;
-				cout << "y = " << koef[0];
-				return;
-			}
-
-			cout << "incorrect input";
-			return;
-
-		}
-		cin.ignore(); //пропускаем x
-		if (buff=cin.peek() != '^')
-		{
-			if (buff != '+' && buff != '-')
-			{
-				if (!cin.peek()) // значит ввод был koef*x => 2 коэфа a0=0 и a1=koef
-				{
-
-				}
-			}
-		}
-
+		res *= argument;
+		res += koef[i + 1];
 	}
 
-
-
-
-
+	cout << "y = " << res;
 }
 
 int Menu::SelectItem(size_t options_amount_)

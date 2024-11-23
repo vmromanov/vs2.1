@@ -25,7 +25,7 @@ private:
 	double a;
 	double b;
 public:
-	Line(double a_ = 0, double b_ = 0, double args);
+	Line(double args=0, double a_ = 0, double b_ = 0);
 
 	~Line() override { delete[] name; }
 
@@ -36,8 +36,6 @@ public:
 
 class Exponent : protected Function
 {
-private:
-	double eps;
 
 public:
 	Exponent(double argument_ = 0);
@@ -77,12 +75,16 @@ private:
 public:
 	Menu()
 	{
-		options_amount = 3;
+		options_amount = 4;
 
-		Line line_function;
-		Exponent exponent_function;
+		obj_ptr = new Function * [4];
+	}
 
-		obj_ptr = new Function * [3];
+	Menu(Function** arr_, size_t options_amount_)
+	{
+		options_amount = options_amount_;
+
+		obj_ptr = arr_;
 	}
 
 	Function* SelectedFunction()
