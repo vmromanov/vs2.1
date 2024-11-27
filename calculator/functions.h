@@ -10,35 +10,39 @@ protected:
 	char* name;
 	double argument;
 public:
-	Function(double argument_ = 0) { name[0] = '\0'; argument = argument_; }
+	Function() { name = new char[1];name[0]='\0'; argument = 0; }
 
-	virtual ~Function() {};
+	Function(double argument_) { name = new char; name[0] = '\0'; argument = argument_; }
+
+	virtual ~Function() { delete[] name; };
 
 	virtual void Calculate() = 0;
 
 	virtual char* GetName() = 0;
 };
 
-class Line : protected Function
+class Line : public Function
 {
 private:
 	double a;
 	double b;
 public:
-	Line(double args=0, double a_ = 0, double b_ = 0);
+	Line();
 
-	~Line() override { delete[] name; }
+	Line(double args, double a_, double b_);
+
+	~Line() override { ; }
 
 	char* GetName() override { return name; }
 
 	void Calculate() override;
 };
 
-class Exponent : protected Function
+class Exponent : public Function
 {
 
 public:
-	Exponent(double argument_ = 0);
+	Exponent();
 
 	~Exponent() override { delete[] name; }
 
@@ -47,16 +51,15 @@ public:
 	void Calculate() override;
 };
 
-class Polynom :protected Function
+class Polynom :public Function
 {
 	double* koef;
-	int size;
 public:
-	Polynom(double arg = 0);
+	Polynom();
 
 	~Polynom() override
+
 	{
-		delete[] name;
 		delete[] koef;
 	}
 
@@ -69,36 +72,13 @@ class Menu
 {
 private:
 	Function** obj_ptr;
-	size_t options_amount;
 
-	int SelectItem(size_t options_amount_);
+	int GetFunctionIndex(size_t options_amount_);
 public:
-	Menu()
-	{
-		options_amount = 4;
+	Menu() { obj_ptr = nullptr; }
 
-		obj_ptr = new Function * [4];
-	}
+	Menu(Function** func_arr_) { obj_ptr = func_arr_; }
 
-	Menu(Function** arr_, size_t options_amount_)
-	{
-		options_amount = options_amount_;
-
-		obj_ptr = arr_;
-	}
-
-	Function* SelectedFunction()
-	{
-		int option = 0;
-
-		cout << "Which function do you want to use?" << endl << endl;
-
-		for (size_t i = 0; i < options_amount - 1; ++i)
-			cout << i + 1 << ". " << obj_ptr[i]->GetName() << endl;
-
-		cout << options_amount << ". Exit" << endl << "-> ";
-
-		return obj_ptr[SelectItem(options_amount) - 1];
-	}
+	Function* SelectedFunction();
 };
 
