@@ -22,7 +22,5 @@ int main()
 		system("cls");
 	}
 
-	cout << "FIN" << endl;
-
 	return 0;
 }
