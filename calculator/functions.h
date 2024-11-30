@@ -14,7 +14,7 @@ public:
 
 	Function(double argument_) { name = new char; name[0] = '\0'; argument = argument_; }
 
-	virtual ~Function() { delete[] name; };
+	virtual ~Function() { ; };
 
 	virtual void Calculate() = 0;
 
@@ -31,7 +31,7 @@ public:
 
 	Line(double args, double a_, double b_);
 
-	~Line() override { ; }
+	~Line() override { delete[] name; }
 
 	char* GetName() override { return name; }
 
@@ -51,6 +51,19 @@ public:
 	void Calculate() override;
 };
 
+class X_cubed :public Function
+{
+
+public:
+	X_cubed();
+
+	~X_cubed()override { delete[] name; };
+
+	char* GetName() override { return name; }
+
+	void Calculate() override;
+};
+
 class Polynom :public Function
 {
 	double* koef;
@@ -61,6 +74,7 @@ public:
 
 	{
 		delete[] koef;
+		delete[] name;
 	}
 
 	char* GetName() override { return name; }
@@ -73,12 +87,16 @@ class Menu
 private:
 	Function** obj_ptr;
 
-	int GetFunctionIndex(size_t options_amount_);
+	int size;
+
+	int Option_Choose(size_t options_amount_);
 public:
-	Menu() { obj_ptr = nullptr; }
+	Menu() { obj_ptr = nullptr; size = 0; }
 
-	Menu(Function** func_arr_) { obj_ptr = func_arr_; }
+	Menu(Function** func_arr_, int size_) { obj_ptr = func_arr_; size = size_; }
 
-	Function* SelectedFunction();
+	//~Menu() { delete[] obj_ptr; }
+
+	Function* Selection();
 };
 

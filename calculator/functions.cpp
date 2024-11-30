@@ -10,10 +10,10 @@ Line::Line()
 	strcpy(name, "ax + b");
 }
 
-Line::Line(double args, double a, double b):Function(args)
+Line::Line(double args, double a_, double b_):Function(args)
 {
-	a = a;
-	b = b;
+	a = a_;
+	b = b_;
 
 	name = new char[7];
 	strcpy(name, "ax + b");
@@ -61,8 +61,6 @@ Polynom::Polynom()
 	strcpy(name, "a_nx^n + ... + a_0");
 }
 
-
-
 void Polynom::Calculate()
 {
 	int degree ;
@@ -88,7 +86,7 @@ void Polynom::Calculate()
 	cout << "y = " << res<<endl;
 }
 
-int Menu::GetFunctionIndex(size_t options_amount_)
+int Menu::Option_Choose(size_t options_amount_)
 {
 	int option = 0;
 	cin >> option;
@@ -102,19 +100,32 @@ int Menu::GetFunctionIndex(size_t options_amount_)
 	return option;
 }
 
-Function* Menu::SelectedFunction()
+Function* Menu::Selection()
 {
 	int option = 0;
-	int arr_size = sizeof(**obj_ptr) / sizeof(Function*);
-
+	
 	cout << "Which Function Do You Want To Use?" << endl;
 
-	for (size_t i = 0; i < arr_size; ++i)
-		cout << i + 1 << ". " << obj_ptr[i]->GetName() << endl;
+	for (size_t i = 0; i < size; ++i)
+		cout << i + 1 << ". "<<"y(x) = " << obj_ptr[i]->GetName() << endl;
 
-	cout << arr_size + 1 << ". Exit" << endl << "> ";
+	cout << size + 1 << ". Exit" << endl << "> ";
+	option = Option_Choose(size + 1);
 
-	return obj_ptr[GetFunctionIndex(arr_size + 1) - 1];
+	if (option == (size + 1))return nullptr;
+
+	return obj_ptr[option - 1];
 }
 
+X_cubed::X_cubed()
+{
+	name = new char[4];
+	strcpy(name, "x^3");
+}
 
+void X_cubed::Calculate()
+{
+	cout << "Enter x: ";
+	cin >> argument;
+	cout << "y = " << (argument * argument * argument)<<endl;
+}

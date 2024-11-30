@@ -6,19 +6,19 @@ int main()
 	Line line_f;
 	Exponent exp_f;
 	Polynom pol_f;
+	X_cubed cube_f;
 
-	Function* arr[]= { &line_f , &exp_f, &pol_f, nullptr };
-	
-	Menu menu(arr);
+	Function* arr[]= { &line_f , &exp_f, &pol_f, &cube_f };
+	int size = sizeof(arr) / sizeof(Function*);
 
-	while (Function* obj = menu.SelectedFunction())
+	Menu menu(arr, size);
+
+	while (Function* obj = menu.Selection())
 	{
 		obj->Calculate();
 		system("pause");
-		system("cls");
+		cout << "\033[2J\033[1;1H"; //system("cls");
 	}
-
-	cout << "FIN" << endl;
 
 	return 0;
 }
@@ -31,5 +31,3 @@ int main()
 
 
 
-// дано натур число n, выбросить из записи этого числа цифры 3 и 7 оставив прежним порядок ост цифр
-//3171507377->1150
