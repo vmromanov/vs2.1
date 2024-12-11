@@ -21,12 +21,12 @@ int main()
 	// 2 - несовпадение размеров матриц в сложении +/+=/-/-=
 	// 1 - обращение к элементу с неправ. индексами  set el/get el
 
-	Matrix<int> a(3, 4);
+	Matrix<int> a(2, 2);
 	Matrix<double> b(2, 3);
-	Matrix<int> c(3, 4);
+	Matrix<int> c(2, 2);
 	Matrix<double> d(2, 3);
 
-	cout << "input a(3*4), b(2*3), c(3*4), d(2*3):\n";
+	cout << "input a(2*2), b(2*3), c(2*2), d(2*3):\n";
 	cin >> a >> b >> c >> d;
 
 	cout << endl;
