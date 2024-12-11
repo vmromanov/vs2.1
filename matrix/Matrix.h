@@ -67,3 +67,31 @@ public:
 
 double Min(Matrix& matrix_);
 
+template <typename InputType, typename OutputType>
+OutputType** calculateNeighborAverages(int size, InputType** inputMatrix) {
+    OutputType** outputMatrix = new OutputType * [size];
+    for (int i = 0; i < size; ++i) {
+        outputMatrix[i] = new OutputType[size];
+    }
+
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            OutputType neighborSum = 0;
+            int count = 0;
+            for (int di = -1; di <= 1; ++di) {
+                for (int dj = -1; dj <= 1; ++dj) {
+                    if (di == 0 && dj == 0) continue;
+                    int ni = i + di;
+                    int nj = j + dj;
+                    if (ni >= 0 && ni < size && nj >= 0 && nj < size) {
+                        neighborSum += inputMatrix[ni][nj];
+                        ++count;
+                    }
+                }
+            }
+            outputMatrix[i][j] = neighborSum / count;
+        }
+    }
+
+    return outputMatrix;
+}
