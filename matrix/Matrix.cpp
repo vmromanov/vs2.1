@@ -257,6 +257,44 @@ istream& operator>>(istream& stream, Matrix& M)
 	return stream;
 }
 
+ifstream& operator>>(ifstream& stream, Matrix& matrix)
+{
+	if (!stream.is_open())
+		return stream;
+
+	if (matrix.matrix)
+		matrix.Clear();
+
+	stream >> matrix.rows;
+	if (matrix.rows < 0)
+	{
+		stream.setstate(ios::failbit);
+		throw IncorrectInput();
+	}
+	stream >> matrix.columns;
+	if (matrix.columns < 0)
+	{
+		stream.setstate(ios::failbit);
+		throw IncorrectInput();
+	}
+
+	matrix.Memmory(matrix.rows, matrix.columns);
+
+	for (int i = 0; i < matrix.rows; ++i)
+	{
+		for (int j = 0; j < matrix.columns; ++j)
+		{
+			if (!(stream >> matrix.matrix[i][j]))
+			{
+				stream.setstate(ios::failbit);
+				throw IncorrectInput();
+			}
+		}
+	}
+
+	return stream;
+}
+
 void Matrix::set_el(double el, int r, int coll)
 {
 	if (r < 0 || r >= row || coll < 0 || coll >= column)
