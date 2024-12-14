@@ -48,6 +48,8 @@ public:
 
 	friend istream& operator>>(istream& stream, Matrix& M);
 
+	friend ifstream& operator>>(ifstream& stream, Matrix& matrix);
+
 	virtual bool operator==(Matrix& other) const;
 
 	bool operator!=(Matrix& other_);
