@@ -117,9 +117,7 @@ public:
 			sv[i] = res[i];
 		delete[] res.coef;
 		res.size = res.size - k;
-		res.coef = new double[res.size];
-		for (int i = 0; i < res.size - k; i++)
-			res[i] = sv[i];
+		res.coef = sv;
 
 		return res;
 	}
@@ -178,15 +176,7 @@ public:
 		int k = 0;
 		for (int i = res.size - 1; res[i] == 0 && i > 0; i--)
 			k++;
-		if (k == res.size)
-		{
-			res.size = 1;
-			delete[] res.coef;
-			res.coef = new double;
-			res[0] = 0;
-			return res;
-		}
-
+		
 		double* sv = new double[res.size - k];
 		for (int i = 0; i < res.size - k; i++)
 			sv[i] = res[i];
@@ -230,7 +220,7 @@ public:
 				}
 			
 		}
-
+		delete[] res.coef;
 		res.size = s + 1 - so;
 		res.coef = new double[res.size];
 
@@ -243,10 +233,12 @@ public:
 			if (q[i] != 0) m = i;
 		if (m == -1) 
 		{
+			delete[] res.coef;
 			res.coef = new double[1];
 			res[0] = 0;
 			return res;
 		}
+		delete[] res.coef;
 		res.coef = new double[m + 1];
 		res.size = m + 1;
 		for (int i = 0; i <= m; i++)
