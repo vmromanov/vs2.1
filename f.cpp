@@ -198,7 +198,7 @@ public:
 			res.coef = new double[1];
 			res[0] = 0;
 		}
-		int s = this->size;
+		size_t s = this->size;
 		int so = other.size;
 
 		double* q = new double[s - so + 1];
@@ -228,7 +228,7 @@ public:
 			res[i] = q[i];
 
 		// убираем пред идущие нули
-		int m = -1;
+		long long int m = -1;
 		for (int i = 0; i < res.size; i++)
 			if (q[i] != 0) m = i;
 		if (m == -1) 
